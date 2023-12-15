@@ -15,7 +15,7 @@ const RegisterScreen = () => {
     const [password, setPassword] = useState("");
     const [gender, setGender] = useState(false);
     const navigation = useNavigation();
-    
+
     const [cname, setCName] = useState(false);
     const [cphone, setCPhone] = useState(false);
     const [cpassword, setCPassword] = useState(false);
@@ -35,16 +35,15 @@ const RegisterScreen = () => {
         if (phone === "") {
             setCPhone(true)
         } else setCPhone(false)
-        if(password === ""){
+        if (password === "") {
             setCPassword(true)
         } else setCPassword(false)
-        
-        if(name!=="" && phone!=="" && password!==""){
+
+        if (name !== "" && phone !== "" && password !== "") {
             await request.post("/customer/register", info)
-                .then(res=>{
-                    if(res.data.success===true){
-                        showLoginPopup();
-                        NotificationManager.success('Đăng ký thành công');
+                .then(res => {
+                    if (res.data.success === true) {
+                        navigation.navigate("Login");
                     }
                 })
         }
@@ -83,17 +82,17 @@ const RegisterScreen = () => {
                         size={24}
                         color={"grey"} />
                     <TextInput
-                        value={phone}
-                        onChangeText={text => setPhone(text)}
+                        value={name}
+                        onChangeText={text => setName(text)}
                         style={{
                             color: "grey",
                             marginVertical: 8,
                             width: 300,
-                            fontSize: phone ? 16 : 16
+                            fontSize: name ? 16 : 16
                         }}
                         placeholder="Họ và tên" />
                 </View>
-                    {cname?<Text style={{color:"red", fontSize:12, paddingTop:5}}>Chưa nhập họ và tên</Text>:""}
+                {cname ? <Text style={{ color: "red", fontSize: 12, paddingTop: 5 }}>Chưa nhập họ và tên</Text> : ""}
                 <View
                     style={{
                         alignItems: "center",
@@ -112,8 +111,8 @@ const RegisterScreen = () => {
                         size={24}
                         color={"grey"} />
                     <TextInput
-                        value={name}
-                        onChangeText={text => setName(text)}
+                        value={phone}
+                        onChangeText={text => setPhone(text)}
                         style={{
                             color: "grey",
                             marginVertical: 8,
@@ -122,7 +121,7 @@ const RegisterScreen = () => {
                         }}
                         placeholder="Số điện thoại" />
                 </View>
-                {cphone?<Text style={{color:"red", fontSize:12, paddingTop:5}}>Chưa nhập số điện thoại</Text>:""}
+                {cphone ? <Text style={{ color: "red", fontSize: 12, paddingTop: 5 }}>Chưa nhập số điện thoại</Text> : ""}
 
                 <View
                     style={{
@@ -153,7 +152,7 @@ const RegisterScreen = () => {
                         }}
                         placeholder="Mật khẩu" />
                 </View>
-                {cpassword?<Text style={{color:"red", fontSize:12, paddingTop:5}}>Chưa nhập mật khẩu</Text>:""}
+                {cpassword ? <Text style={{ color: "red", fontSize: 12, paddingTop: 5 }}>Chưa nhập mật khẩu</Text> : ""}
 
                 <View
                     style={{
@@ -168,7 +167,7 @@ const RegisterScreen = () => {
                 </View>
                 <View style={{ marginTop: 80 }} />
                 <Pressable
-                onPress={handleResgister}
+                    onPress={handleResgister}
                     style={{
                         width: 200,
                         marginLeft: "auto",
@@ -188,7 +187,7 @@ const RegisterScreen = () => {
 
                 </Pressable>
                 <Pressable onPress={() => navigation.navigate("Login")}>
-                    <Text style={{ textAlign: "center", color: "gray", fontSize: 16, marginTop:10 }}>Bạn đã có tài khoản? Đăng nhập</Text>
+                    <Text style={{ textAlign: "center", color: "gray", fontSize: 16, marginTop: 10 }}>Bạn đã có tài khoản? Đăng nhập</Text>
                 </Pressable>
             </KeyboardAvoidingView>
         </SafeAreaView>

@@ -44,7 +44,7 @@ const DetectScreen = () => {
 
         formData.append("image_file", image.base64, "image_file")
 
-        await axios.post("http://192.168.1.8:8080/detect-flower", { image: image.base64 }, {
+        await axios.post("http://172.20.10.14:8080/detect-flower", { image: image.base64 }, {
             headers: {
                 "Access-Control-Allow-Origin": '*',
                 "Content-Type": 'multipart/form-data'

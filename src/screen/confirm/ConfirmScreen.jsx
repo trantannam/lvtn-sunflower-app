@@ -83,7 +83,7 @@ const Confirm = () => {
                 },
                 totalEstimate: total,
                 products: cart || [],
-                deliveryStatus: "waiting for progressing",
+                deliveryStatus: 0,
                 paymentStatus: "cod"
             }).then(
                 res => {
@@ -116,12 +116,18 @@ const Confirm = () => {
         }
     }
 
+    useEffect(() => {
+        if (returnUrl) {
+            receivedUrlVnpayReturn(returnUrl)
+        }
+    }, [returnUrl])
+
     const receivedUrlVnpayReturn = (data) => {
         while (match = regex.exec(data)) {
             params[match[1]] = match[2];
         }
         if (params["vnp_ResponseCode"] === "00") {
-            setUrlVnpay('');
+            setReturnUrl('');
             request.post("/purchase-order/create", {
                 tranCode: tranCodeCOD(),
                 customer: userId,
@@ -134,7 +140,7 @@ const Confirm = () => {
                 },
                 totalEstimate: total,
                 products: cart || [],
-                deliveryStatus: "waiting for progressing",
+                deliveryStatus: 0,
                 paymentStatus: "paid"
             }).then(
                 res => {
@@ -195,7 +201,7 @@ const Confirm = () => {
                             source={{ uri: urlVnpay }}
                             injectedJavaScript={runFirst}
                             setSupportMultipleWindows={false}
-                            onMessage={(e) => receivedUrlVnpayReturn(e.nativeEvent.url)}
+                            onMessage={(e) => setReturnUrl(e.nativeEvent.url)}
                         />
                     </View>
                     :
